@@ -14,7 +14,7 @@ def upload_files_in_directory(directory, api_id, api_hash, bot_token):
                 
                 # Menggunakan nama file dan URL sebagai caption saat mengunggahnya dengan markdown
                 file_url = os.path.join(base_url, filename)
-                caption = f"{filename}"
+                caption = f"`{filename}`"
                 
                 # Membuat tombol download dengan InlineKeyboardButton
                 button = InlineKeyboardButton(text="📦 Download", url=file_url)

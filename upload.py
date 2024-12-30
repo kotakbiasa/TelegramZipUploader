@@ -1,6 +1,7 @@
 import os
 import argparse
 from pyrogram import Client
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
 def upload_files_in_directory(directory, api_id, api_hash, bot_token):
     with Client("deltarvx", api_id=api_id, api_hash=api_hash, bot_token=bot_token) as app:
@@ -11,11 +12,15 @@ def upload_files_in_directory(directory, api_id, api_hash, bot_token):
             for filename in files:
                 file_path = os.path.join(root, filename)
                 
-                # Menggunakan nama file dan URL sebagai caption saat mengunggahnya
+                # Menggunakan nama file dan URL sebagai caption saat mengunggahnya dengan markdown
                 file_url = os.path.join(base_url, filename)
-                caption = f"File: {filename}\nURL: [Download]({file_url})"
+                caption = f"{filename}"
                 
-                app.send_document(chat_id=chat_id, document=file_path, caption=caption)
+                # Membuat tombol download dengan InlineKeyboardButton
+                button = InlineKeyboardButton(text="Download", url=file_url)
+                reply_markup = InlineKeyboardMarkup([[button]])
+                
+                app.send_document(chat_id=chat_id, document=file_path, caption=caption, reply_markup=reply_markup)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Upload files in a directory to Telegram.')

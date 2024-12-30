@@ -11,9 +11,9 @@ def upload_files_in_directory(directory, api_id, api_hash, bot_token):
             for filename in files:
                 file_path = os.path.join(root, filename)
                 
-                # Menggunakan URL file sebagai caption saat mengunggahnya
+                # Menggunakan nama file dan URL sebagai caption saat mengunggahnya
                 file_url = os.path.join(base_url, filename)
-                caption = f"[Downloads]({file_url})" 
+                caption = f"File: {filename}\nURL: [Download]({file_url})"
                 
                 app.send_document(chat_id=chat_id, document=file_path, caption=caption)
 

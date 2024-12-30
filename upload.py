@@ -17,7 +17,7 @@ def upload_files_in_directory(directory, api_id, api_hash, bot_token):
                 caption = f"{filename}"
                 
                 # Membuat tombol download dengan InlineKeyboardButton
-                button = InlineKeyboardButton(text="Download", url=file_url)
+                button = InlineKeyboardButton(text="📦 Download", url=file_url)
                 reply_markup = InlineKeyboardMarkup([[button]])
                 
                 app.send_document(chat_id=chat_id, document=file_path, caption=caption, reply_markup=reply_markup)

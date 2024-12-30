@@ -5,13 +5,15 @@ from pyrogram import Client
 def upload_files_in_directory(directory, api_id, api_hash, bot_token):
     with Client("deltarvx", api_id=api_id, api_hash=api_hash, bot_token=bot_token) as app:
         chat_id = 'KotakReVanced'  # Ganti dengan ID chat atau channel tujuan Anda
-
+        base_url = f"https://github.com/kotakbiasa/TelegramZipUploader/blob/main/{directory}/"
+        
         for root, _, files in os.walk(directory):
             for filename in files:
                 file_path = os.path.join(root, filename)
                 
-                # Menggunakan nama file sebagai caption saat mengunggahnya
-                caption = f"File: {filename}"
+                # Menggunakan URL file sebagai caption saat mengunggahnya
+                file_url = os.path.join(base_url, filename)
+                caption = f"[Downloads]({file_url})" 
                 
                 app.send_document(chat_id=chat_id, document=file_path, caption=caption)
 

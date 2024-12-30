@@ -4,7 +4,7 @@ from pyrogram import Client
 
 def upload_files_in_directory(directory, api_id, api_hash, bot_token):
     with Client("deltarvx", api_id=api_id, api_hash=api_hash, bot_token=bot_token) as app:
-        chat_id = 'DeltaRevanced'  # Ganti dengan ID chat atau channel tujuan Anda
+        chat_id = 'KotakReVanced'  # Ganti dengan ID chat atau channel tujuan Anda
 
         for root, _, files in os.walk(directory):
             for filename in files:

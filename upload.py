@@ -7,7 +7,8 @@ def upload_files_in_directory(directory, api_id, api_hash, bot_token):
     with Client("deltarvx", api_id=api_id, api_hash=api_hash, bot_token=bot_token) as app:
         chat_id = 'KotakReVanced'  # Ganti dengan ID chat atau channel tujuan Anda
         base_url = f"https://github.com/kotakbiasa/TelegramZipUploader/blob/main/{directory}/"
-        
+        thumbnail_path = 'images/revanced.png'  # Jalur ke thumbnail
+
         for root, _, files in os.walk(directory):
             for filename in files:
                 file_path = os.path.join(root, filename)
@@ -20,7 +21,7 @@ def upload_files_in_directory(directory, api_id, api_hash, bot_token):
                 button = InlineKeyboardButton(text="📦 Download", url=file_url)
                 reply_markup = InlineKeyboardMarkup([[button]])
                 
-                app.send_document(chat_id=chat_id, document=file_path, caption=caption, reply_markup=reply_markup)
+                app.send_document(chat_id=chat_id, document=file_path, caption=caption, reply_markup=reply_markup, thumb=thumbnail_path)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Upload files in a directory to Telegram.')

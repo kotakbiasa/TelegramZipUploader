@@ -7,7 +7,7 @@ def upload_files_in_directory(directory, api_id, api_hash, bot_token):
     with Client("deltarvx", api_id=api_id, api_hash=api_hash, bot_token=bot_token) as app:
         chat_id = 'KotakReVanced'  # Ganti dengan ID chat atau channel tujuan Anda
         base_url = f"https://github.com/kotakbiasa/TelegramZipUploader/blob/main/{directory}/"
-        thumbnail_path = 'revanced.png'  # Jalur ke thumbnail
+        thumbnail_path = '/revanced.png'  # Jalur ke thumbnail
         sticker_file_id = 'CAACAgUAAxkBAAL5bmdzQCVh4hHgW2-fkVtnHJ4Ht8ETAAJRAgACPFM4VgSSYZ1RQ-Q_NgQ'  # ID or file path of the sticker
 
         for root, _, files in os.walk(directory):

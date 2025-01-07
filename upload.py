@@ -20,7 +20,12 @@ def upload_files_in_directory(directory, api_id, api_hash, bot_token):
                 button = InlineKeyboardButton(text="📦 Download", url=file_url)
                 reply_markup = InlineKeyboardMarkup([[button]])
                 
-                app.send_document(chat_id=chat_id, document=file_path, caption=caption, reply_markup=reply_markup)
+                message = app.send_document(chat_id=chat_id, document=file_path, caption=caption, reply_markup=reply_markup)
+                
+                # Menambahkan reaksi ke pesan yang diunggah
+                app.send_reaction(chat_id=chat_id, message_id=message.message_id, emoji="👍")
+                app.send_reaction(chat_id=chat_id, message_id=message.message_id, emoji="❤️")
+                app.send_reaction(chat_id=chat_id, message_id=message.message_id, emoji="👎")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Upload files in a directory to Telegram.')

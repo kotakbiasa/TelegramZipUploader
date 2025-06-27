@@ -13,7 +13,9 @@ def download_thumb():
         with open(THUMB_PATH, "wb") as f:
             f.write(r.content)
 
-def upload_files_in_directory(directory, api_id, api_hash, bot_token, release_tag):
+def upload_files_in_directory(directory, api_id, api_hash, bot_token, release_tag, emoji=None):
+    if not emoji:
+        emoji = "🔥 👍"
     download_thumb()
     with Client("deltarvx", api_id=api_id, api_hash=api_hash, bot_token=bot_token) as app:
         chat_id = 'KotakReVanced'  # Ganti dengan ID chat atau channel tujuan Anda
@@ -33,6 +35,14 @@ def upload_files_in_directory(directory, api_id, api_hash, bot_token, release_ta
                     reply_markup=reply_markup,
                     thumb=THUMB_PATH
                 )
+                # Kirim reaksi emoji satu per satu jika ada lebih dari satu
+                if emoji:
+                    for emj in emoji.split():
+                        app.send_reaction(
+                            chat_id=chat_id,
+                            message_id=message.id,
+                            emoji=emj
+                        )
                 
 
 if __name__ == "__main__":
@@ -42,6 +52,7 @@ if __name__ == "__main__":
     parser.add_argument('--api_hash', type=str, help='API Hash for your Telegram app')
     parser.add_argument('--bot_token', type=str, help='Bot Token for your Telegram bot')
     parser.add_argument('--release_tag', type=str, help='Release tag for GitHub URL', required=True)
+    parser.add_argument('--emoji', type=str, help='Emoji reaction to add to each message', required=False)
 
     args = parser.parse_args()
 
@@ -51,7 +62,8 @@ if __name__ == "__main__":
         api_hash = args.api_hash
         bot_token = args.bot_token
         release_tag = args.release_tag
+        emoji = args.emoji if args.emoji else "🔥👍"
 
-        upload_files_in_directory(directory, api_id, api_hash, bot_token, release_tag)
+        upload_files_in_directory(directory, api_id, api_hash, bot_token, release_tag, emoji)
     else:
         print("Please provide directory path, api_id, api_hash, bot_token, and release_tag using appropriate arguments.")

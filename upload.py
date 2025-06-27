@@ -3,23 +3,18 @@ import argparse
 from pyrogram import Client
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 
-def upload_files_in_directory(directory, api_id, api_hash, bot_token):
+def upload_files_in_directory(directory, api_id, api_hash, bot_token, release_tag):
     with Client("deltarvx", api_id=api_id, api_hash=api_hash, bot_token=bot_token) as app:
         chat_id = 'KotakReVanced'  # Ganti dengan ID chat atau channel tujuan Anda
-        base_url = f"https://github.com/kotakbiasa/TelegramZipUploader/blob/main/{directory}/"
+        base_url = f"https://github.com/muhnurfauzan/revanced-magisk-module/releases/{release_tag}/"
         
         for root, _, files in os.walk(directory):
             for filename in files:
                 file_path = os.path.join(root, filename)
-                
-                # Menggunakan nama file dan URL sebagai caption saat mengunggahnya dengan markdown
-                file_url = os.path.join(base_url, filename)
+                file_url = base_url + filename
                 caption = f"`{filename}`"
-                
-                # Membuat tombol download dengan InlineKeyboardButton
                 button = InlineKeyboardButton(text="📦 Download", url=file_url)
                 reply_markup = InlineKeyboardMarkup([[button]])
-                
                 message = app.send_document(chat_id=chat_id, document=file_path, caption=caption, reply_markup=reply_markup)
                 
 

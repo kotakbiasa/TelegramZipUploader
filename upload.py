@@ -16,6 +16,13 @@ def download_thumb():
 def upload_files_in_directory(directory, api_id, api_hash, bot_token, release_tag, emoji=None):
     if not emoji:
         emoji = "🔥 👍"
+    # Pastikan hanya emoji yang valid (tanpa spasi, tanpa gabungan)
+    emoji_list = []
+    for emj in emoji.split():
+        emj = emj.strip()
+        # Filter hanya emoji unicode satu karakter (bukan gabungan)
+        if emj and len(emj) <= 2:
+            emoji_list.append(emj)
     download_thumb()
     with Client("deltarvx", api_id=api_id, api_hash=api_hash, bot_token=bot_token) as app:
         chat_id = 'KotakReVanced'  # Ganti dengan ID chat atau channel tujuan Anda
@@ -35,19 +42,16 @@ def upload_files_in_directory(directory, api_id, api_hash, bot_token, release_ta
                     reply_markup=reply_markup,
                     thumb=THUMB_PATH
                 )
-                # Kirim reaksi emoji satu per satu, pastikan hanya emoji valid (tanpa spasi)
-                if emoji:
-                    for emj in emoji.split():
-                        emj = emj.strip()
-                        if emj:  # pastikan tidak kosong
-                            try:
-                                app.send_reaction(
-                                    chat_id=chat_id,
-                                    message_id=message.id,
-                                    emoji=emj
-                                )
-                            except Exception as e:
-                                print(f"Failed to send reaction '{emj}': {e}")
+                # Kirim reaksi emoji satu per satu, hanya emoji valid
+                for emj in emoji_list:
+                    try:
+                        app.send_reaction(
+                            chat_id=chat_id,
+                            message_id=message.id,
+                            emoji=emj
+                        )
+                    except Exception as e:
+                        print(f"Failed to send reaction '{emj}': {e}")
                 
 
 if __name__ == "__main__":

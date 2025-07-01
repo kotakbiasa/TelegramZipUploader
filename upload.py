@@ -35,14 +35,19 @@ def upload_files_in_directory(directory, api_id, api_hash, bot_token, release_ta
                     reply_markup=reply_markup,
                     thumb=THUMB_PATH
                 )
-                # Kirim reaksi emoji satu per satu jika ada lebih dari satu
+                # Kirim reaksi emoji satu per satu, pastikan hanya emoji valid (tanpa spasi)
                 if emoji:
                     for emj in emoji.split():
-                        app.send_reaction(
-                            chat_id=chat_id,
-                            message_id=message.id,
-                            emoji=emj
-                        )
+                        emj = emj.strip()
+                        if emj:  # pastikan tidak kosong
+                            try:
+                                app.send_reaction(
+                                    chat_id=chat_id,
+                                    message_id=message.id,
+                                    emoji=emj
+                                )
+                            except Exception as e:
+                                print(f"Failed to send reaction '{emj}': {e}")
                 
 
 if __name__ == "__main__":
